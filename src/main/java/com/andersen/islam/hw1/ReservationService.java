@@ -19,25 +19,28 @@ public class ReservationService {
         System.out.print("Enter workspace ID: ");
         int id = scanner.nextInt();
         scanner.nextLine();
+        try {
+            Workspace ws = workspaceService.getWorkspaceById(id);
+            if (ws == null) {
+                System.out.println("Invalid ID or workspace not available.");
+                return;
+            }
+            System.out.print("Enter date: ");
+            String date = scanner.nextLine();
+            System.out.print("Enter start time: ");
+            String start = scanner.nextLine();
+            System.out.print("Enter end time: ");
+            String end = scanner.nextLine();
 
-        Workspace ws = workspaceService.getWorkspaceById(id);
-        if (ws == null) {
-            System.out.println("Invalid ID or workspace not available.");
-            return;
+            Reservation res = new Reservation(nextId, name, date, start, end, id);
+            reservations.add(res);
+            nextId++;
+            workspaceService.setAvailability(id, false);
+            System.out.println("Reservation successful!");
+        } catch (WorkspaceNotFoundException e) {
+            System.out.println(e.getMessage());
         }
 
-        System.out.print("Enter date: ");
-        String date = scanner.nextLine();
-        System.out.print("Enter start time: ");
-        String start = scanner.nextLine();
-        System.out.print("Enter end time: ");
-        String end = scanner.nextLine();
-
-        Reservation res = new Reservation(nextId, name, date, start, end, id);
-        reservations.add(res);
-        nextId++;
-        workspaceService.setAvailability(id, false);
-        System.out.println("Reservation successful!");
     }
 
     void viewReservationsByName(String name) {

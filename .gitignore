@@ -4,6 +4,7 @@ target/
 !**/src/test/**/target/
 
 ### IntelliJ IDEA ###
+*.xml
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
@@ -11,7 +12,12 @@ target/
 *.iws
 *.iml
 *.ipr
-
+*.log
+*.class
+/out/
+/.idea/
+/.vscode/
+/target/
 ### Eclipse ###
 .apt_generated
 .classpath

@@ -1,5 +1,6 @@
 package com.andersen.islam.hw1;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -45,13 +46,13 @@ public class WorkspaceService {
         }
     }
 
-    Workspace getWorkspaceById(int id) {
+    Workspace getWorkspaceById(int id) throws WorkspaceNotFoundException {
         for (Workspace ws : workspaces) {
             if (ws.id == id && ws.available) {
                 return ws;
             }
         }
-        return null;
+        throw new WorkspaceNotFoundException("Workspace ID " + id + " not available.");
     }
 
     void setAvailability(int id, boolean available) {
@@ -59,6 +60,30 @@ public class WorkspaceService {
             if (ws.id == id) {
                 ws.available = available;
             }
+        }
+    }
+
+    void saveToFile() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("workspaces.txt"))) {
+            for (Workspace ws : workspaces) {
+                writer.write(ws.toString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error saving workspaces to file.");
+        }
+    }
+
+    void loadFromFile() {
+        try (BufferedReader reader = new BufferedReader(new FileReader("workspaces.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                Workspace ws = Workspace.fromString(line);
+                workspaces.add(ws);
+                nextId = Math.max(nextId, ws.id + 1);
+            }
+        } catch (IOException e) {
+            System.out.println("No saved workspaces found. Starting fresh.");
         }
     }
 }

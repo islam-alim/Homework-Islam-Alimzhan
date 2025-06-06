@@ -7,6 +7,9 @@ public class MainApplication {
         Scanner scanner = new Scanner(System.in);
         WorkspaceService workspaceService = new WorkspaceService();
         ReservationService reservationService = new ReservationService(workspaceService);
+
+        workspaceService.loadFromFile();
+
         while (true) {
             System.out.println("\nWelcome to the Coworking Space Reservation System");
             System.out.println("1. Admin Login");
@@ -22,6 +25,7 @@ public class MainApplication {
                 Customer customer = new Customer(workspaceService, reservationService);
                 customer.showMenu();
             } else if (choice == 3) {
+                workspaceService.saveToFile();
                 System.out.println("Goodbye!");
                 break;
             } else {
