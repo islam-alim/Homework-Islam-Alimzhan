@@ -24,6 +24,4 @@ public class Workspace {
     public String toString() {
         return "ID: " + id + ", Type: " + type + ", Price: T" + price + ", Available: " + available;
     }
-
-
 }
