@@ -1,12 +1,14 @@
 package com.andersen.islam.hw1;
 
+import com.andersen.islam.hw1.util.Storage;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class WorkspaceService {
-    List<Workspace> workspaces = new ArrayList<>();
+    Storage<Workspace> workspaces = new Storage<>();
     int nextId = 1;
     Scanner scanner = new Scanner(System.in);
 
