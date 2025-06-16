@@ -1,6 +1,7 @@
 package com.andersen.islam.hw1;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 public class Workspace {
     int id;
@@ -14,16 +15,14 @@ public class Workspace {
         this.price = BigDecimal.valueOf(price);
     }
 
-    public static Workspace fromString(String line) {
+    public static Optional<Workspace> fromString(String line) {
         String[] parts = line.split(",");
         Workspace ws = new Workspace(Integer.parseInt(parts[0]), parts[1], Double.parseDouble(parts[2]));
         ws.available = Boolean.parseBoolean(parts[3]);
-        return ws;
+        return Optional.of(ws);
     }
 
     public String toString() {
         return "ID: " + id + ", Type: " + type + ", Price: T" + price + ", Available: " + available;
     }
-
-
 }
