@@ -1,11 +1,14 @@
 package com.andersen.islam.hw1;
 
+import com.andersen.islam.hw1.util.Storage;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ReservationService {
-    List<Reservation> reservations = new ArrayList<>();
+    Storage<Reservation> reservations = new Storage<>();
     int nextId = 1;
     WorkspaceService workspaceService;
     Scanner scanner = new Scanner(System.in);
@@ -33,7 +36,7 @@ public class ReservationService {
             String end = scanner.nextLine();
 
             Reservation res = new Reservation(nextId, name, date, start, end, id);
-            reservations.add(res);
+            reservations.add(Optional.of(res));
             nextId++;
             workspaceService.setAvailability(id, false);
             System.out.println("Reservation successful!");
@@ -44,11 +47,9 @@ public class ReservationService {
     }
 
     void viewReservationsByName(String name) {
-        for (Reservation res : reservations) {
-            if (res.name.equalsIgnoreCase(name)) {
-                System.out.println(res);
-            }
-        }
+        reservations.getAll().stream()
+                .filter(res -> res.name.equalsIgnoreCase(name))
+                .forEach(System.out::println);
     }
 
     void cancelReservation(String name) {

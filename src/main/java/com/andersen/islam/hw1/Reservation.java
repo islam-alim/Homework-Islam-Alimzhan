@@ -20,6 +20,8 @@ public class Reservation {
         this.workspaceId = workspaceId;
     }
 
+
+
     public String toString() {
         return "Reservation ID: " + id + ", Name: " + name + ", Workspace ID: " + workspaceId +
                 ", Date: " + date + ", Time: " + startTime + " to " + endTime;
