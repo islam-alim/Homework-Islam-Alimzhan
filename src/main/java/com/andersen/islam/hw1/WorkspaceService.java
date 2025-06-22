@@ -80,10 +80,10 @@ public class WorkspaceService {
         try (BufferedReader reader = new BufferedReader(new FileReader("workspaces.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                Optional<Workspace> ws = Workspace.fromString(line);
-                if (ws.isPresent()) {
+                Workspace ws = Workspace.fromString(line);
+                if (ws ) {
                     workspaces.add(ws);
-                    nextId = Math.max(nextId, ws.get().id) + 1;
+                    nextId = Math.max(nextId, ws.id) + 1;
                 }
             }
         } catch (IOException e) {

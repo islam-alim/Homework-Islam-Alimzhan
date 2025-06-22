@@ -1,9 +1,14 @@
 package com.andersen.islam.hw1;
 
+import com.andersen.islam.hw1.loader.PluginClassLoader;
+
 import java.util.Scanner;
 
 public class MainApplication {
     public static void main(String[] args) {
+
+        testPlugin();
+
         Scanner scanner = new Scanner(System.in);
         WorkspaceService workspaceService = new WorkspaceService();
         ReservationService reservationService = new ReservationService(workspaceService);
@@ -33,4 +38,17 @@ public class MainApplication {
             }
         }
     }
+
+    public static void testPlugin() {
+        try {
+            PluginClassLoader loader = new PluginClassLoader("plugins");
+            Class<?> clazz = loader.findClass("SpecialOffer");
+            Object instance = clazz.getDeclaredConstructor().newInstance();
+            clazz.getMethod("applyOffer").invoke(instance);
+        } catch (Exception e) {
+            System.out.println("Plugin failed: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
 }

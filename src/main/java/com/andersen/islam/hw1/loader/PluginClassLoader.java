@@ -12,7 +12,7 @@ public class PluginClassLoader extends ClassLoader {
     }
 
     @Override
-    protected Class<?> findClass(String name) throws ClassNotFoundException {
+    public Class<?> findClass(String name) throws ClassNotFoundException {
         String path = directory + "/" + name + ".class";
         try {
             // Read class file as bytes
