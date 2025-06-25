@@ -1,12 +1,14 @@
 package com.andersen.islam.hw1;
 
+import com.andersen.islam.hw1.util.Storage;
+
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
+
 public class WorkspaceService {
-    List<Workspace> workspaces = new ArrayList<>();
+    Storage<Workspace> workspaces = new Storage<>();
     int nextId = 1;
     Scanner scanner = new Scanner(System.in);
 
@@ -18,7 +20,7 @@ public class WorkspaceService {
         scanner.nextLine();
 
         Workspace workspace = new Workspace(nextId, type, price);
-        workspaces.add(workspace);
+        workspaces.add(Optional.of(workspace));
         nextId++;
         System.out.println("Workspace added.");
     }
@@ -79,8 +81,9 @@ public class WorkspaceService {
             String line;
             while ((line = reader.readLine()) != null) {
                 Workspace ws = Workspace.fromString(line);
-                workspaces.add(ws);
-                nextId = Math.max(nextId, ws.id + 1);
+                workspaces.add(Optional.of(ws));
+                nextId = Math.max(nextId, ws.id) + 1;
+
             }
         } catch (IOException e) {
             System.out.println("No saved workspaces found. Starting fresh.");

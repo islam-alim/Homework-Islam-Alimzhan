@@ -1,6 +1,7 @@
 package com.andersen.islam.hw1;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 public class Workspace {
     int id;
@@ -24,6 +25,4 @@ public class Workspace {
     public String toString() {
         return "ID: " + id + ", Type: " + type + ", Price: T" + price + ", Available: " + available;
     }
-
-
 }
