@@ -1,6 +1,5 @@
 package com.andersen.islam.hw1.util;
 
-import com.andersen.islam.hw1.Reservation;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,10 +19,6 @@ public class Storage<T> implements Iterable<T> {
 
     public boolean remove(T item) {
         return items.remove(item);
-    }
-
-    public void clear() {
-        items.clear();
     }
 
     @Override

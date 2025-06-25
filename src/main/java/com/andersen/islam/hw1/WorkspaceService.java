@@ -81,10 +81,9 @@ public class WorkspaceService {
             String line;
             while ((line = reader.readLine()) != null) {
                 Workspace ws = Workspace.fromString(line);
-                if (ws ) {
-                    workspaces.add(ws);
-                    nextId = Math.max(nextId, ws.id) + 1;
-                }
+                workspaces.add(Optional.of(ws));
+                nextId = Math.max(nextId, ws.id) + 1;
+
             }
         } catch (IOException e) {
             System.out.println("No saved workspaces found. Starting fresh.");
