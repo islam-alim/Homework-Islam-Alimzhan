@@ -2,9 +2,6 @@ package com.andersen.islam.hw1;
 
 import com.andersen.islam.hw1.util.Storage;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class ReservationService {
@@ -36,7 +33,7 @@ public class ReservationService {
             String end = scanner.nextLine();
 
             Reservation res = new Reservation(nextId, name, date, start, end, id);
-            reservations.add(Optional.of(res));
+            reservations.add(res);
             nextId++;
             workspaceService.setAvailability(id, false);
             System.out.println("Reservation successful!");
