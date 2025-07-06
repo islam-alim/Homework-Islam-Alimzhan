@@ -1,12 +1,14 @@
 package com.andersen.islam.hw1;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Timestamp;
 import java.util.Scanner;
 
 public class ReservationService {
-    List<Reservation> reservations = new ArrayList<>();
+
+    ReservationRepositorySql reservationRepositorySql = new ReservationRepositorySql();
+
     int nextId = 1;
+
     WorkspaceService workspaceService;
     Scanner scanner = new Scanner(System.in);
 
@@ -25,15 +27,13 @@ public class ReservationService {
                 System.out.println("Invalid ID or workspace not available.");
                 return;
             }
-            System.out.print("Enter date: ");
-            String date = scanner.nextLine();
-            System.out.print("Enter start time: ");
+            System.out.print("Enter start time (yyyy-MM-dd HH:mm:ss): ");
             String start = scanner.nextLine();
-            System.out.print("Enter end time: ");
+            System.out.print("Enter end time (yyyy-MM-dd HH:mm:ss): ");
             String end = scanner.nextLine();
 
-            Reservation res = new Reservation(nextId, name, date, start, end, id);
-            reservations.add(res);
+            Reservation res = new Reservation(nextId, name, Timestamp.valueOf(start), Timestamp.valueOf(end), id);
+            reservationRepositorySql.addReservation(res);
             nextId++;
             workspaceService.setAvailability(id, false);
             System.out.println("Reservation successful!");
@@ -44,33 +44,14 @@ public class ReservationService {
     }
 
     void viewReservationsByName(String name) {
-        for (Reservation res : reservations) {
-            if (res.name.equalsIgnoreCase(name)) {
-                System.out.println(res);
-            }
-        }
+        reservationRepositorySql.viewReservationsByName(name);
     }
 
     void cancelReservation(String name) {
-        viewReservationsByName(name);
-        System.out.print("Enter reservation ID to cancel: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-
-        for (Reservation res : reservations) {
-            if (res.id == id && res.name.equalsIgnoreCase(name)) {
-                reservations.remove(res);
-                workspaceService.setAvailability(res.workspaceId, true);
-                System.out.println("Reservation cancelled.");
-                return;
-            }
-        }
-        System.out.println("Reservation not found.");
+        reservationRepositorySql.cancelReservation(name);
     }
 
     void viewAllReservations() {
-        for (Reservation res : reservations) {
-            System.out.println(res);
-        }
+        reservationRepositorySql.showAllReservations();
     }
 }
