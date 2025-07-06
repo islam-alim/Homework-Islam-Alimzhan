@@ -7,12 +7,13 @@ public class Workspace {
     int id;
     String type;
     BigDecimal price;
-    boolean available = true;
+    boolean available;
 
-    Workspace(int id, String type, BigDecimal price) {
+    Workspace(int id, String type, BigDecimal price, boolean available) {
         this.id = id;
         this.type = type;
         this.price = price;
+        this.available = available;
     }
 
     public static Workspace fromString(String line) {
@@ -22,7 +23,7 @@ public class Workspace {
         BigDecimal price = new BigDecimal(parts[2]);
         boolean available = Boolean.parseBoolean(parts[3]);
 
-        Workspace ws = new Workspace(id, type, price);
+        Workspace ws = new Workspace(id, type, price, available);
         ws.available = available;
         return ws;
     }

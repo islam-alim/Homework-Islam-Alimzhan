@@ -20,7 +20,7 @@ class WorkspaceServiceTest {
     @Test
     void testAddWorkspace() {
 
-        service.addWorkspace("Private Room", 100);
+        service.addWorkspace("Private Room", 100, true);
 
         ArrayList<Workspace> list = service.getWorkspaces();
         assertEquals(1, list.size());
@@ -32,7 +32,7 @@ class WorkspaceServiceTest {
 
     @Test
     void testRemoveWorkspace() {
-        service.addWorkspace("Meeting Room", 75);
+        service.addWorkspace("Meeting Room", 75, true);
         int id = service.getWorkspaces().get(0).id;
 
         boolean result = service.removeWorkspaceById(id);
@@ -43,8 +43,8 @@ class WorkspaceServiceTest {
 
     @Test
     void testShowAvailableWorkspaces() {
-        service.addWorkspace("Booth", 40);
-        service.addWorkspace("Cabin", 90);
+        service.addWorkspace("Booth", 40, true);
+        service.addWorkspace("Cabin", 90, true);
         service.setAvailability(1, false);  // mark first as unavailable
 
         // Capture printed output
@@ -60,7 +60,7 @@ class WorkspaceServiceTest {
 
     @Test
     void testGetWorkspaceById() throws WorkspaceNotFoundException {
-        service.addWorkspace("Focus Pod", 60);
+        service.addWorkspace("Focus Pod", 60, true);
         Workspace ws = service.getWorkspaces().getFirst();
 
         Workspace found = service.getWorkspaceById(ws.id);
@@ -77,7 +77,7 @@ class WorkspaceServiceTest {
 
     @Test
     void testSetAvailability() throws WorkspaceNotFoundException {
-        service.addWorkspace("Open Space", 30);
+        service.addWorkspace("Open Space", 30, true);
         Workspace ws = service.getWorkspaces().getFirst();
 
         service.setAvailability(ws.id, false);
@@ -93,7 +93,7 @@ class WorkspaceServiceTest {
     void testSaveAndLoadFromFile() {
         String testFile = "workspaces.txt";
 
-        service.addWorkspace("Lounge", 55);
+        service.addWorkspace("Lounge", 55, true);
         service.saveToFile();
 
         WorkspaceService loadedService = new WorkspaceService();

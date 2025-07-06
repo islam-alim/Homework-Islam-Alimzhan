@@ -1,43 +1,42 @@
 package com.andersen.islam.hw1;
 
-import com.andersen.islam.hw1.util.Storage;
-
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
 public class WorkspaceService {
-    Storage<Workspace> workspaces = new Storage<>();
-    int nextId = 1;
+
+    List<Workspace> workspaces = new ArrayList<>();
+
+    WorkspaceRepositorySql workspaceRepositorySql = new WorkspaceRepositorySql();
+
+    int nextId = workspaceRepositorySql.getNextWorkspaceId();
+
     Scanner scanner = new Scanner(System.in);
 
 
-    void addWorkspace(String type, double price) {
-        Workspace workspace = new Workspace(nextId, type, BigDecimal.valueOf(price));
-        workspaces.add(workspace);
+    void addWorkspace(String type, double price, boolean available) {
+        Workspace workspace = new Workspace(nextId, type, BigDecimal.valueOf(price), available);
+        workspaceRepositorySql.addWorkspace(workspace);
         nextId++;
     }
 
     void addWorkspace() {
+        boolean available = true;
         System.out.print("Enter workspace type: ");
         String type = scanner.nextLine();
         System.out.print("Enter price: ");
         double price = scanner.nextDouble();
         scanner.nextLine();
-        addWorkspace(type, price);
-        System.out.println("Workspace added.");
+        addWorkspace(type, price, available);
     }
 
     boolean removeWorkspaceById(int id) {
-        for (Workspace ws : workspaces) {
-            if (ws.id == id) {
-                workspaces.remove(ws);
-                return true;
-            }
-        }
-        return false;
+        workspaceRepositorySql.deleteWorkspaceById(id);
+        return true;
     }
 
     void removeWorkspace() {
@@ -53,32 +52,19 @@ public class WorkspaceService {
     }
 
     void showAvailableWorkspaces() {
-        for (Workspace ws : workspaces) {
-            if (ws.available) {
-                System.out.println(ws);
-            }
-        }
+        workspaceRepositorySql.showAvailableWorkspaces();
     }
 
-    public ArrayList<Workspace> getWorkspaces() {
-        return (ArrayList<Workspace>) workspaces.getAll();
+    List<Workspace> getAllWorkspaces() {
+        return workspaceRepositorySql.getAllWorkspaces();
     }
 
     Workspace getWorkspaceById(int id) throws WorkspaceNotFoundException {
-        for (Workspace ws : workspaces) {
-            if (ws.id == id && ws.available) {
-                return ws;
-            }
-        }
-        throw new WorkspaceNotFoundException("Workspace ID " + id + " not available.");
+        return workspaceRepositorySql.getWorkspaceById(id);
     }
 
     void setAvailability(int id, boolean available) {
-        for (Workspace ws : workspaces) {
-            if (ws.id == id) {
-                ws.available = available;
-            }
-        }
+        workspaceRepositorySql.setAvailability(id, available);
     }
 
     void saveToFile() {
