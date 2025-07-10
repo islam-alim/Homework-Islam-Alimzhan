@@ -13,14 +13,15 @@ public class WorkspaceService {
 
     WorkspaceRepositorySql workspaceRepositorySql = new WorkspaceRepositorySql();
 
+    WorkspaceRepositoryJpa workspaceRepositoryJpa = new WorkspaceRepositoryJpa();
+
     int nextId = workspaceRepositorySql.getNextWorkspaceId();
 
     Scanner scanner = new Scanner(System.in);
 
 
     void addWorkspace(String type, double price, boolean available) {
-        Workspace workspace = new Workspace(nextId, type, BigDecimal.valueOf(price), available);
-        workspaceRepositorySql.addWorkspace(workspace);
+        workspaceRepositoryJpa.addWorkspace(type, BigDecimal.valueOf(price), available);
         nextId++;
     }
 
@@ -91,4 +92,6 @@ public class WorkspaceService {
             System.out.println("No saved workspaces found. Starting fresh.");
         }
     }
+
+
 }

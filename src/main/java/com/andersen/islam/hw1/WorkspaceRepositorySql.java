@@ -1,5 +1,7 @@
 package com.andersen.islam.hw1;
 
+import jakarta.persistence.Entity;
+
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;

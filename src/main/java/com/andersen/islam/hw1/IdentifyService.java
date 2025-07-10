@@ -3,20 +3,20 @@ package com.andersen.islam.hw1;
 import java.util.Optional;
 
 public class IdentifyService {
+    private final WorkspaceRepositoryJpa workspaceRepositoryJpa;
 
-    private final CustomerRepositorySql customerRepositorySql;
-
-    public IdentifyService(CustomerRepositorySql customerRepositorySql) {
-        this.customerRepositorySql = customerRepositorySql;
+    public IdentifyService(WorkspaceRepositoryJpa workspaceRepositoryJpa) {
+        this.workspaceRepositoryJpa = workspaceRepositoryJpa;
     }
 
-    public Optional<String> getName(int customerId) {
-        return checkIsAnExternalCustomer(customerId)
-                ? Optional.of("External customer")
-                : customerRepositorySql.getNameById(customerId);
+    public Optional<String> getType(int workspaceId) {
+        return checkIsAnEternalConsultant(workspaceId)
+                ? Optional.of("External consultant")
+                : workspaceRepositoryJpa.getTypeById(workspaceId);
     }
 
-    private boolean checkIsAnExternalCustomer(int customerId) {
-        return customerId>=100;
+    private boolean checkIsAnEternalConsultant(int workspaceId) {
+        return workspaceId>=100;
     }
+
 }

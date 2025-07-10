@@ -22,7 +22,7 @@ class WorkspaceServiceTest {
 
         service.addWorkspace("Private Room", 100, true);
 
-        ArrayList<Workspace> list = service.getWorkspaces();
+        ArrayList<Workspace> list = (ArrayList<Workspace>) service.getWorkspaces();
         assertEquals(1, list.size());
 
         Workspace w = list.getFirst();
