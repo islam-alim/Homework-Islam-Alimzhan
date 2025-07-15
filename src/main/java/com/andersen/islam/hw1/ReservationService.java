@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class ReservationService {
 
-    ReservationRepositorySql reservationRepositorySql = new ReservationRepositorySql();
+    ReservationRepositoryJpa reservationRepositoryJpa = new ReservationRepositoryJpa();
 
     int nextId = 1;
 
@@ -33,7 +33,7 @@ public class ReservationService {
             String end = scanner.nextLine();
 
             Reservation res = new Reservation(nextId, name, Timestamp.valueOf(start), Timestamp.valueOf(end), id);
-            reservationRepositorySql.addReservation(res);
+            reservationRepositoryJpa.addReservation(res);
             nextId++;
             workspaceService.setAvailability(id, false);
             System.out.println("Reservation successful!");
@@ -44,14 +44,14 @@ public class ReservationService {
     }
 
     void viewReservationsByName(String name) {
-        reservationRepositorySql.viewReservationsByName(name);
+        reservationRepositoryJpa.viewReservationsByName(name);
     }
 
     void cancelReservation(String name) {
-        reservationRepositorySql.cancelReservation(name);
+        reservationRepositoryJpa.cancelReservation(name);
     }
 
     void viewAllReservations() {
-        reservationRepositorySql.showAllReservations();
+        reservationRepositoryJpa.showAllReservations();
     }
 }

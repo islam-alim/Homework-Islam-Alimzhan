@@ -12,6 +12,8 @@ public class MainApplication {
         Scanner scanner = new Scanner(System.in);
         WorkspaceService workspaceService = new WorkspaceService();
         ReservationService reservationService = new ReservationService(workspaceService);
+        CustomerRepositoryJpa customerRepositoryJpa = new CustomerRepositoryJpa();
+
 
         workspaceService.loadFromFile();
 
@@ -28,7 +30,23 @@ public class MainApplication {
                 admin.showMenu();
             } else if (choice == 2) {
                 Customer customer = new Customer(workspaceService, reservationService);
+
+                System.out.print("Enter your name: ");
+                String name = scanner.nextLine();
+
+                int new_or_not;
+                System.out.println("Are you new in this application?" +
+                        "\n 1. YES \n 2. NO");
+                new_or_not = scanner.nextInt();
+
+                if (new_or_not == 1) {
+                    customerRepositoryJpa.addCustomer(name);
+                } else if (new_or_not == 2) {
+                    System.out.println("Great, let's go!");
+                }
+
                 customer.showMenu();
+
             } else if (choice == 3) {
                 workspaceService.saveToFile();
                 System.out.println("Goodbye!");

@@ -11,18 +11,15 @@ public class WorkspaceService {
 
     List<Workspace> workspaces = new ArrayList<>();
 
-    WorkspaceRepositorySql workspaceRepositorySql = new WorkspaceRepositorySql();
-
     WorkspaceRepositoryJpa workspaceRepositoryJpa = new WorkspaceRepositoryJpa();
 
-    int nextId = workspaceRepositorySql.getNextWorkspaceId();
+
 
     Scanner scanner = new Scanner(System.in);
 
 
     void addWorkspace(String type, double price, boolean available) {
         workspaceRepositoryJpa.addWorkspace(type, BigDecimal.valueOf(price), available);
-        nextId++;
     }
 
     void addWorkspace() {
@@ -36,7 +33,7 @@ public class WorkspaceService {
     }
 
     boolean removeWorkspaceById(int id) {
-        workspaceRepositorySql.deleteWorkspaceById(id);
+        workspaceRepositoryJpa.deleteWorkspaceById(id);
         return true;
     }
 
@@ -53,19 +50,19 @@ public class WorkspaceService {
     }
 
     void showAvailableWorkspaces() {
-        workspaceRepositorySql.showAvailableWorkspaces();
+        workspaceRepositoryJpa.showAvailableWorkspaces();
     }
 
     List<Workspace> getAllWorkspaces() {
-        return workspaceRepositorySql.getAllWorkspaces();
+        return workspaceRepositoryJpa.getAllWorkspaces();
     }
 
     Workspace getWorkspaceById(int id) throws WorkspaceNotFoundException {
-        return workspaceRepositorySql.getWorkspaceById(id);
+        return workspaceRepositoryJpa.getWorkspaceById(id);
     }
 
     void setAvailability(int id, boolean available) {
-        workspaceRepositorySql.setAvailability(id, available);
+        workspaceRepositoryJpa.setAvailability(id, available);
     }
 
     void saveToFile() {
@@ -80,6 +77,7 @@ public class WorkspaceService {
     }
 
     void loadFromFile() {
+        int nextId = 1;
         try (BufferedReader reader = new BufferedReader(new FileReader("workspaces.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
